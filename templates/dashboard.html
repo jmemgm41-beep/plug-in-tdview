@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>POMMS Dashboard</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+nav {
+    margin-bottom: 15px;
+}
+
+a.button,
+button {
+    display: inline-block;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 7px;
+    text-decoration: none;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.gray {
+    background: #6b7280 !important;
+}
+
+.red {
+    background: #dc2626 !important;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.card {
+    background: white;
+    padding: 17px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.08);
+}
+
+.card h3 {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.filter {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+}
+
+input[type="date"] {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 9px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 13px;
+}
+
+th {
+    background: #e5e7eb;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.section {
+    margin-top: 25px;
+}
+
+</style>
+
+
+<style>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 180px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    color: #222;
+    text-decoration: none;
+    background: white;
+}
+
+.dropdown-content a:hover {
+    background: #f0f0f0;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>POMMS</h1>
+
+<div>Palm Oil Mill Management System</div>
+
+</header>
+
+<div class="container">
+
+<nav>
+
+<div class="dropdown">
+    <button class="button dropbtn" type="button">
+        Produksi ▾
+    </button>
+
+    <div class="dropdown-content">
+        <a href="/production">
+            Input Produksi
+        </a>
+
+        <a href="/sterilizer/add">
+            Input Rebusan
+        </a>
+    </div>
+</div>
+
+<a class="button gray"
+   href="/reports">
+Laporan Bulanan
+</a>
+
+</nav>
+
+<div class="filter">
+
+<form method="GET">
+
+<strong>Tanggal:</strong>
+
+<input
+    type="date"
+    name="date"
+    value="{{ selected_date }}"
+>
+
+<button type="submit">
+Tampilkan
+</button>
+
+</form>
+
+</div>
+
+<h2>
+KPI {{ selected_date }}
+</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>BR Diterima</h3>
+<div class="value">
+{{ "%.2f"|format(summary["br_received"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>BR Diolah</h3>
+<div class="value">
+{{ "%.2f"|format(summary["br_processed"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>CPO</h3>
+<div class="value">
+{{ "%.2f"|format(summary["cpo"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>Kernel</h3>
+<div class="value">
+{{ "%.2f"|format(summary["kernel"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>OER</h3>
+<div class="value">
+{{ "%.2f"|format(oer) }} %
+</div>
+</div>
+
+<div class="card">
+<h3>KER</h3>
+<div class="value">
+{{ "%.2f"|format(ker) }} %
+</div>
+</div>
+
+<div class="card">
+<h3>Throughput</h3>
+<div class="value">
+{{ "%.2f"|format(throughput) }} T/H
+</div>
+</div>
+
+<div class="card">
+<h3>Downtime</h3>
+<div class="value">
+{{ "%.2f"|format(summary["downtime_hours"]) }} H
+</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Production History</h2>
+
+<table>
+
+<tr>
+<th>Tanggal</th>
+<th>Shift</th>
+<th>Operator</th>
+<th>BR</th>
+<th>CPO</th>
+<th>Kernel</th>
+<th>OER</th>
+<th>KER</th>
+<th>Aksi</th>
+</tr>
+
+{% for row in rows %}
+
+{% set row_oer =
+(row["cpo"] / row["br_processed"] * 100)
+if row["br_processed"] else 0 %}
+
+{% set row_ker =
+(row["kernel"] / row["br_processed"] * 100)
+if row["br_processed"] else 0 %}
+
+<tr>
+
+<td>{{ row["production_date"] }}</td>
+
+<td>{{ row["shift"] }}</td>
+
+<td>{{ row["operator"] }}</td>
+
+<td>{{ "%.2f"|format(row["br_processed"]) }}</td>
+
+<td>{{ "%.2f"|format(row["cpo"]) }}</td>
+
+<td>{{ "%.2f"|format(row["kernel"]) }}</td>
+
+<td>{{ "%.2f"|format(row_oer) }}%</td>
+
+<td>{{ "%.2f"|format(row_ker) }}%</td>
+
+<td>
+
+<div class="actions">
+
+<a class="button"
+   href="/production?id={{ row['id'] }}">
+Edit
+</a>
+
+<form method="POST"
+      action="/delete/{{ row['id'] }}"
+      onsubmit="return confirm('Hapus data ini?');">
+
+<button class="red"
+        type="submit">
+Hapus
+</button>
+
+</form>
+
+</div>
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+<td colspan="9">
+Belum ada data produksi.
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>
+Rekap Bulan Berjalan
+</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>BR Bulanan</h3>
+<div class="value">
+{{ "%.2f"|format(monthly["br_processed"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>CPO Bulanan</h3>
+<div class="value">
+{{ "%.2f"|format(monthly["cpo"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>Kernel Bulanan</h3>
+<div class="value">
+{{ "%.2f"|format(monthly["kernel"]) }} T
+</div>
+</div>
+
+<div class="card">
+<h3>OER Bulanan</h3>
+<div class="value">
+{{ "%.2f"|format(monthly_oer) }} %
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

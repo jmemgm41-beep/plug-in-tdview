@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Input Sterilizer</title>
+
+<style>
+
+body {
+    font-family: Arial;
+    background: #f3f4f6;
+    margin: 0;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 15px;
+}
+
+.form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 13px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background: #2563eb;
+    color: white;
+    border: 0;
+    border-radius: 7px;
+}
+
+.section {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>POMMS</h1>
+
+<div>Input Cycle Sterilizer</div>
+
+</header>
+
+<div class="container">
+
+<p>
+<a href="/sterilizer">
+← Kembali
+</a>
+</p>
+
+<form
+class="form"
+method="POST"
+action="/sterilizer/add">
+
+<label>Tanggal</label>
+
+<input
+type="date"
+name="production_date"
+value="{{ today }}"
+required
+>
+
+<label>Shift</label>
+
+<select name="shift">
+
+<option>Shift 1</option>
+<option>Shift 2</option>
+
+
+</select>
+
+<label>Sterilizer</label>
+
+<select name="sterilizer">
+
+<option>Sterilizer 1</option>
+<option>Sterilizer 2</option>
+<option>Sterilizer 3</option>
+
+</select>
+
+<label>Nomor Cycle</label>
+
+<input
+type="number"
+name="cycle_number"
+min="1"
+required
+>
+
+<label>Operator</label>
+
+<input
+type="text"
+name="operator"
+>
+
+<label>BR per Cycle (Ton)</label>
+
+<input
+type="number"
+step="0.01"
+name="br_tonnage"
+required
+>
+
+<div class="section">
+
+<h3>Parameter Waktu</h3>
+
+<label>Loading (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="loading_min"
+value="16"
+>
+
+<label>Deaerasi (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="deaeration_min"
+value="5"
+>
+
+<label>Peak 1 (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="peak1_min"
+value="4"
+>
+
+<label>Blowdown 1 (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="blowdown1_min"
+value="5"
+>
+
+<label>Peak 2 (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="peak2_min"
+value="9"
+>
+
+<label>Holding Time (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="holding_min"
+value="32"
+>
+
+<label>Blowdown + Blow-up (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="blowdown_blowup_min"
+value="10"
+>
+
+<label>Buka Pintu (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="opening_min"
+value="6"
+>
+
+<label>Unloading (menit)</label>
+
+<input
+type="number"
+step="0.1"
+name="unloading_min"
+value="18"
+>
+
+</div>
+
+<div class="section">
+
+<h3>Standard</h3>
+
+<p>
+Standard cycle:
+<strong>{{ standard_cycle }} menit</strong>
+</p>
+
+<label>Catatan</label>
+
+<textarea
+name="notes"
+rows="4">
+</textarea>
+
+</div>
+
+<button type="submit">
+SIMPAN CYCLE
+</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

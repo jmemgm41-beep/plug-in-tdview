@@ -1,0 +1,21 @@
+venv/
+__pycache__/
+*.pyc
+
+data/*.db
+data/*.db-*
+*.bak
+*.bak1
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+
+app.py.backup_*
+app.py.bak*
+
+# Template backup / eksperimen
+templates/*.bak*
+templates/*_before_*
+templates/*_backup*
+templates/*_pre_*

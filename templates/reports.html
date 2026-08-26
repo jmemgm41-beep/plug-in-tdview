@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laporan Bulanan - POMMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #222;
+            color: #eee;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: #111827;
+            padding: 25px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+
+        .filter {
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #777;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #111;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .label {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .value {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+            background: #111;
+        }
+
+        th {
+            background: #30343b;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+/* =========================================================
+   MOBILE RESPONSIVE - LAPORAN BULANAN
+   ========================================================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin: 15px 0 20px;
+}
+
+.card {
+    min-width: 0;
+    padding: 18px;
+    border-radius: 10px;
+    background: #111;
+}
+
+.card .label {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.card .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #eee;
+}
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 10px;
+}
+
+.table-scroll table {
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+.table-scroll th,
+.table-scroll td {
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    header {
+        padding: 22px 18px;
+        margin-bottom: 18px;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .button {
+        margin-right: 0;
+        padding: 10px 13px;
+    }
+
+    .filter {
+        padding: 14px;
+    }
+
+    .filter form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .filter input,
+    .filter select,
+    .filter button {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-top: 22px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .card {
+        padding: 14px 12px;
+    }
+
+    .card .label {
+        font-size: 12px;
+    }
+
+    .card .value {
+        font-size: 20px;
+    }
+
+    .table-scroll {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .table-scroll table {
+        min-width: 850px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .cards {
+        gap: 8px;
+    }
+
+    .card {
+        padding: 12px 10px;
+    }
+
+    .card .value {
+        font-size: 18px;
+    }
+}
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+}
+
+.table-scroll table {
+    min-width: 950px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-scroll th,
+.table-scroll td {
+    white-space: nowrap;
+    padding: 10px 12px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 14px;
+    }
+
+    header {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .card .value {
+        font-size: 25px;
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        margin-right: -2px;
+    }
+
+    .table-scroll table {
+        min-width: 950px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>POMMS</h1>
+    <div>Laporan Produksi Bulanan</div>
+</header>
+
+<nav>
+    <a class="button" href="/">← Kembali ke Dashboard</a>
+    <a class="button" href="/production">+ Input Produksi</a>
+</nav>
+
+<div class="filter">
+    <form method="GET" action="/reports">
+
+        <strong>Bulan:</strong>
+
+        <input
+            type="month"
+            name="month"
+            value="{{ selected_month }}"
+        >
+
+        <button type="submit">
+            Tampilkan
+        </button>
+
+    </form>
+</div>
+
+<h2>Laporan Bulanan — {{ selected_month }}</h2>
+
+<div class="cards">
+
+    <div class="card">
+        <div class="label">BR Diterima</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["br_received"] or 0) }} T
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">BR Diolah</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["br_processed"] or 0) }} T
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">CPO</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["cpo"] or 0) }} T
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">Kernel</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["kernel"] or 0) }} T
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">OER</div>
+        <div class="value">
+            {{ "%.2f"|format(monthly_oer) }} %
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">KER</div>
+        <div class="value">
+            {{ "%.2f"|format(monthly_ker) }} %
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">Operating Hours</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["operating_hours"] or 0) }} H
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="label">Downtime</div>
+        <div class="value">
+            {{ "%.2f"|format(summary["downtime_hours"] or 0) }} H
+        </div>
+    </div>
+
+</div>
+
+<div class="card">
+    <div class="label">Throughput</div>
+    <div class="value">
+        {{ "%.2f"|format(
+            (summary["br_processed"] / summary["operating_hours"])
+            if summary["operating_hours"] else 0
+        ) }} T/H
+    </div>
+</div>
+
+<h2>Detail Produksi Harian</h2>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+<tr>
+    <th>Tanggal</th>
+    <th>BR Diterima</th>
+    <th>BR Diolah</th>
+    <th>CPO</th>
+    <th>Kernel</th>
+    <th>OER</th>
+    <th>KER</th>
+    <th>Operating</th>
+    <th>Downtime</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for row in rows %}
+
+{% set daily_oer =
+    (row["cpo"] / row["br_processed"] * 100)
+    if row["br_processed"] else 0
+%}
+
+{% set daily_ker =
+    (row["kernel"] / row["br_processed"] * 100)
+    if row["br_processed"] else 0
+%}
+
+<tr>
+
+<td>
+    {{ row["production_date"] }}
+</td>
+
+<td>
+    {{ "%.2f"|format(row["br_received"] or 0) }} T
+</td>
+
+<td>
+    {{ "%.2f"|format(row["br_processed"] or 0) }} T
+</td>
+
+<td>
+    {{ "%.2f"|format(row["cpo"] or 0) }} T
+</td>
+
+<td>
+    {{ "%.2f"|format(row["kernel"] or 0) }} T
+</td>
+
+<td>
+    {{ "%.2f"|format(daily_oer) }} %
+</td>
+
+<td>
+    {{ "%.2f"|format(daily_ker) }} %
+</td>
+
+<td>
+    {{ "%.2f"|format(row["operating_hours"] or 0) }} H
+</td>
+
+<td>
+    {{ "%.2f"|format(row["downtime_hours"] or 0) }} H
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+    <td colspan="9">
+        Belum ada data produksi untuk bulan {{ selected_month }}.
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>

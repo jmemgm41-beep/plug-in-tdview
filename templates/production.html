@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Input Produksi - POMMS</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 15px;
+}
+
+.form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 14px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px;
+    margin-top: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border: 0;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>POMMS</h1>
+
+<div>
+{% if row %}
+Edit Produksi
+{% else %}
+Input Produksi
+{% endif %}
+</div>
+
+</header>
+
+<div class="container">
+
+<a class="back" href="/">
+← Dashboard
+</a>
+
+<form class="form"
+      method="POST"
+      action="/production">
+
+{% if row %}
+
+<input type="hidden"
+       name="production_id"
+       value="{{ row['id'] }}">
+
+{% endif %}
+
+<label>Tanggal Produksi</label>
+
+<input
+type="date"
+name="production_date"
+value="{{ row['production_date'] if row else '' }}"
+required
+>
+
+<label>Shift</label>
+
+<select name="shift">
+
+<option value="Shift 1"
+{% if row and row["shift"] == "Shift 1" %}
+selected
+{% endif %}>
+Shift 1
+</option>
+
+<option value="Shift 2"
+{% if row and row["shift"] == "Shift 2" %}
+selected
+{% endif %}>
+Shift 2
+</option>
+
+</option>
+
+</select>
+
+<label>Operator</label>
+
+<input
+type="text"
+name="operator"
+value="{{ row['operator'] if row else '' }}"
+placeholder="Nama operator"
+>
+
+<label>BR Diterima (kg)</label>
+
+<input
+type="number"
+step="0.01"
+name="br_received"
+value="{{ row['br_received'] if row else '' }}"
+required
+>
+
+<label>BR Diolah (kg)</label>
+
+<input
+type="number"
+step="0.01"
+name="br_processed"
+value="{{ row['br_processed'] if row else '' }}"
+required
+>
+
+<label>CPO Produksi (kg)</label>
+
+<input
+type="number"
+step="0.01"
+name="cpo"
+value="{{ row['cpo'] if row else 0 }}"
+>
+
+<label>Kernel Produksi (kg)</label>
+
+<input
+type="number"
+step="0.01"
+name="kernel"
+value="{{ row['kernel'] if row else 0 }}"
+>
+
+<label>Jam Operasi</label>
+
+<input
+type="number"
+step="0.01"
+name="operating_hours"
+value="{{ row['operating_hours'] if row else 0 }}"
+required
+>
+
+<label>Downtime (Jam)</label>
+
+<input
+type="number"
+step="0.01"
+name="downtime_hours"
+value="{{ row['downtime_hours'] if row else 0 }}"
+>
+
+<hr>
+
+<h3>Target KPI</h3>
+
+<label>Target OER (%)</label>
+
+<input
+type="number"
+step="0.01"
+name="target_oer"
+value="{{ row['target_oer'] if row else 0 }}"
+>
+
+<label>Target KER (%)</label>
+
+<input
+type="number"
+step="0.01"
+name="target_ker"
+value="{{ row['target_ker'] if row else 0 }}"
+>
+
+<label>Target Throughput (kg/jam)</label>
+
+<input
+type="number"
+step="0.01"
+name="target_throughput"
+value="{{ row['target_throughput'] if row else 0 }}"
+>
+
+<label>Catatan</label>
+
+<textarea
+name="notes"
+rows="4"
+placeholder="Catatan produksi / kejadian penting"
+>{{ row['notes'] if row else '' }}</textarea>
+
+<button type="submit">
+
+{% if row %}
+UPDATE DATA
+{% else %}
+SIMPAN DATA PRODUKSI
+{% endif %}
+
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

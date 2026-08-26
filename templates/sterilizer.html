@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>POMMS Sterilizer</title>
+
+<style>
+
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f3f4f6;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+}
+
+.container {
+    padding: 15px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns:
+    repeat(auto-fit, minmax(160px,1fr));
+    gap: 12px;
+}
+
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.value {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 14px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    margin-bottom: 15px;
+}
+
+.red {
+    background: #dc2626;
+    color: white;
+    border: 0;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+input[type="date"] {
+    padding: 9px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 9px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 13px;
+}
+
+th {
+    background: #e5e7eb;
+}
+
+.normal {
+    color: green;
+    font-weight: bold;
+.short {
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.long {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.normal {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+/* ============================================================
+   MOBILE TABLE FIX
+   ============================================================ */
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 18px;
+}
+
+.table-scroll table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.table-scroll.cycle-log table {
+    min-width: 1100px;
+}
+
+.table-scroll th,
+.table-scroll td {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+
+    .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 8px;
+    }
+
+    .table-scroll.cycle-log table {
+        min-width: 1100px;
+    }
+
+    .table-scroll th,
+    .table-scroll td {
+        font-size: 12px;
+        padding: 7px 9px;
+    }
+
+    .normal,
+    .short,
+    .long {
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .table-scroll form {
+        margin: 0;
+    }
+
+    .table-scroll button {
+        white-space: nowrap;
+    }
+}
+
+
+/* ============================================================
+   MOBILE TABLE FIX
+   ============================================================ */
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 18px;
+}
+
+.table-scroll table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.table-scroll.cycle-log table {
+    min-width: 1100px;
+}
+
+.table-scroll th,
+.table-scroll td {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+
+    .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 8px;
+    }
+
+    .table-scroll.cycle-log table {
+        min-width: 1100px;
+    }
+
+    .table-scroll th,
+    .table-scroll td {
+        font-size: 12px;
+        padding: 7px 9px;
+    }
+
+    .normal,
+    .short,
+    .long {
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .table-scroll form {
+        margin: 0;
+    }
+
+    .table-scroll button {
+        white-space: nowrap;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>POMMS</h1>
+
+<div>Modul Sterilizer</div>
+
+</header>
+
+<div class="container">
+
+<a class="button"
+href="/">
+
+← Dashboard Utama
+</a>
+
+<a class="button"
+href="/sterilizer/add">
+
++ Input Cycle
+</a>
+
+<form method="GET">
+
+Tanggal:
+
+<input
+type="date"
+name="date"
+value="{{ selected_date }}"
+>
+
+<button type="submit">
+Tampilkan
+</button>
+
+</form>
+
+<h2>
+Sterilizer — {{ selected_date }}
+</h2>
+
+<div class="cards">
+
+<div class="card">
+<div>Total Cycle</div>
+
+<div class="value">
+{{ summary["total_cycles"] }}
+</div>
+</div>
+
+<div class="card">
+<div>Total BR</div>
+
+<div class="value">
+{{ "%.2f"|format(summary["total_tonnage"]) }} T
+</div>
+</div>
+
+<div class="card">
+<div>Avg Cycle</div>
+
+<div class="value">
+{{ "%.1f"|format(summary["avg_cycle_time"]) }} min
+</div>
+</div>
+
+<div class="card">
+<div>Avg Load</div>
+
+<div class="value">
+{{ "%.2f"|format(summary["avg_load"]) }} T
+</div>
+</div>
+
+<div class="card">
+<div>Abnormal</div>
+
+<div class="value">
+{{ summary["abnormal_cycles"] }}
+</div>
+</div>
+
+</div>
+
+<h2>Per Sterilizer</h2>
+
+<div class="table-scroll">
+<table>
+
+<tr>
+<th>Sterilizer</th>
+<th>Cycle</th>
+<th>Tonase</th>
+<th>Avg Cycle</th>
+</tr>
+
+{% for row in by_sterilizer %}
+
+<tr>
+
+<td>{{ row["sterilizer"] }}</td>
+
+<td>{{ row["cycles"] }}</td>
+
+<td>
+{{ "%.2f"|format(row["tonnage"]) }} T
+</td>
+
+<td>
+{{ "%.1f"|format(row["avg_cycle"]) }} min
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+</div>
+<div class="table-scroll">
+<table>
+
+<tr>
+
+<th>Unit</th>
+<th>Cycle</th>
+<th>Ton</th>
+<th>Loading</th>
+<th>Deaerasi</th>
+<th>Peak 1</th>
+<th>Blowdown 1</th>
+<th>Peak 2</th>
+<th>Holding</th>
+<th>Blowdown + Blow-up</th>
+<th>Opening</th>
+<th>Unloading</th>
+<th>Total</th>
+</tr>
+
+{% for row in rows %}
+
+<tr>
+
+<td>{{ row["sterilizer"] }}</td>
+
+<td>{{ row["cycle_number"] }}</td>
+
+<td>{{ "%.2f"|format(row["br_tonnage"]) }}</td>
+
+<td>{{ row["loading_min"] }}</td>
+
+<td>{{ row["deaeration_min"] }}</td>
+
+<td>{{ row["peak1_min"] }}</td>
+
+<td>{{ row["blowdown1_min"] }}</td>
+
+<td>{{ row["peak2_min"] }}</td>
+
+<td>{{ row["holding_min"] }}</td>
+
+<td>{{ row["blowdown_blowup_min"] }}</td>
+
+<td>{{ row["opening_min"] }}</td>
+
+<td>{{ row["unloading_min"] }}</td>
+<td>
+{{ "%.1f"|format(row["cycle_time_min"]) }}
+</td>
+
+<td>
+{{ "%.1f"|format(row["deviation_min"]) }}
+</td>
+
+<td>
+
+
+{% if row["status"] == "NORMAL" %}
+
+<span class="normal">
+NORMAL
+</span>
+
+{% elif row["status"] == "SHORT CYCLE" %}
+
+<span class="short">
+SHORT CYCLE
+</span>
+
+{% else %}
+
+<span class="long">
+LONG CYCLE
+</span>
+
+{% endif %}
+</td>
+
+<td>
+
+<form
+method="POST"
+action="/sterilizer/delete/{{ row['id'] }}"
+onsubmit="return confirm('Hapus cycle ini?');">
+
+<button
+class="red"
+type="submit">
+
+Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="16">
+Belum ada cycle.
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table></div></div>
+
+</div>
+
+</body>
+
+</html>
